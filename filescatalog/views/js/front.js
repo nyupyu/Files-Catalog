@@ -32,7 +32,6 @@ function filesCatalog() {
 			PATH_TO_FILE_DATA.pop();
 		}
 		pathToFile = pathToFile.replaceAll(',', '/');
-		pathToFile = pathToFile.replaceAll(' ', '%');
 		pathToFile = SERVER_PATH_TO_DOWNLOAD_FOLDER + pathToFile;
 		return pathToFile;
 	}

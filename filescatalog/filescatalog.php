@@ -155,7 +155,7 @@ class Filescatalog extends Module
         return $this->getFrontController();
     }
 
-    return null; // Nie zmieniaj szablonu dla innych stron
+    return null;
     }
 
 
@@ -166,6 +166,7 @@ class Filescatalog extends Module
         $this->getFrontController();
     }
     }
+
 
     // CONTROLLER
 

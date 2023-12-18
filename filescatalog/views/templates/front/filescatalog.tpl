@@ -6,12 +6,10 @@
   <ol>
     <li>
       <a href="https://qmtwjcpfur.cfolks.pl/pl/"><span>Strona główna</span></a>
-        </li>
-        <li>
-                          <span>Pliki do pobrania</span>
-                      </li>
-        
-          
+    </li>
+    <li>
+      <span>Pliki do pobrania</span>
+    </li>
   </ol>
 </nav>
    		<div id="back"><button id="backButton">Powrót</button></div>

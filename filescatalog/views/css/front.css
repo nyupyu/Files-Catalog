@@ -14,38 +14,42 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-flow: column nowrap;
+	flex-flow: column wrap;
 	gap: var(--gap);
+	padding: var(--gap);
 }
 
 #folders,
 #files {
 	display: flex;
+	flex-flow: row wrap;
 	gap: var(--gap);
 }
 
 .folder,
 .file {
-	background-color: beige;
 	border-radius: 8px;
 	padding: 10px 20px;
-	text-align: center;
+	text-align: left;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	cursor: pointer;
-	gap: 10px;
+	gap: 5px;
+	background-color: lightgray;
 }
-
+.file {
+	width: 200px;
+}
 .folder {
-	background-color: aquamarine;
+	background-color: rgb(207, 255, 239);
 }
 
 .pdf::before {
 	display: block;
 	content: '';
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
 	background-image: url('../img/pdf.png');
 	background-size: cover;
 	justify-self: center;
@@ -55,8 +59,8 @@
 .folder::before {
 	display: block;
 	content: '';
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
 	background-image: url('../img/folder.png');
 	background-size: cover;
 	justify-self: center;
