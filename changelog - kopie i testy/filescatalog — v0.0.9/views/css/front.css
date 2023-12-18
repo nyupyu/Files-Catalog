@@ -1,0 +1,19 @@
+#filesCatalog {
+	background-color: aqua;
+	width: 100%;
+	min-height: 500px;
+}
+.filesCatalog__list {
+	list-style-type: none;
+	padding: 0;
+}
+
+.filesCatalog__folder {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.filesCatalog__file {
+	margin-left: 20px;
+	cursor: pointer;
+}

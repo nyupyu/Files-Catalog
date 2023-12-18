@@ -1,0 +1,13 @@
+Changelog dla projektu modułu Files Catalog by Oktawian Wybieralski aka Nyupyu.
+
+v0.0.1 - pierwszy pomyślny test z wykorzystaniem lokacji w module
+v0.0.2 - pomyślny test z wykorzystaniem lokacji w public-html oraz zapisaniu JSON w module
+v0.0.3 - szybka refakturyzacja kodu, dodałem zmienne "const"
+v0.0.4 - dodanie możliwości zmiany ścieżki w konfiguracji pliku
+v0.0.5 - pomyślne przeprowadzenie testu z nadpisaniem szablonu
+v0.0.6 - zmiana, zamiast nadpisywania szablonu dodaję do strony dodatkową treść
+v0.0.7 - optymalizacja kodu, optymalizacja konfiguracji ścieżki 
+v0.0.8 - poprawne załadowanie wszystkich plików łącznie z importem pliku json w javascript
+v0.0.9 - poprawne wygenerowanie struktury linków na stronie 
+v0.1.0 - pierwsza wersja z obsługa plików, brak generowania linków do plików 
+v0.1.1 -

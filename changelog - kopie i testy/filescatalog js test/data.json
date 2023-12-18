@@ -1,0 +1,30 @@
+{
+	"ePropulsion": {
+		"0": "cos2.pdf",
+		"1": "cos.pdf",
+		"2": "Instrukcja.pdf",
+		"Instrukcje": ["Instrukcja.pdf"],
+		"Silniki Zaburtowe": {
+			"Broszura": ["here.pdf", "here.pdf"],
+			"Instrukcja": "here.pdf",
+			"0": "cos2.pdf",
+			"1": "cos.pdf",
+			"2": "Instrukcja.pdf"
+		}
+	},
+	"Mastervolt": {
+		"0": "cos2.pdf",
+		"1": "cos.pdf",
+		"2": "Instrukcja.pdf",
+		"Instrukcje": ["Instrukcja.pdf"],
+		"Silniki Zaburtowe": ["Broszura.pdf"]
+	},
+	"Victron Energy": {
+		"0": "Broszura.pdf",
+		"1": "cos2.pdf",
+		"2": "cos.pdf",
+		"Broszury": ["Broszura 2.pdf", "Broszura.pdf"],
+		"Instrukcje": ["Instrukcja2.pdf", "Instrukcja.pdf"],
+		"Zdjęcia": ["image.jpg"]
+	}
+}
