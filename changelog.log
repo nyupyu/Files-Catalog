@@ -10,4 +10,5 @@ v0.0.7 - optymalizacja kodu, optymalizacja konfiguracji ścieżki
 v0.0.8 - poprawne załadowanie wszystkich plików łącznie z importem pliku json w javascript
 v0.0.9 - poprawne wygenerowanie struktury linków na stronie 
 v0.1.0 - pierwsza wersja z obsługa plików, brak generowania linków do plików 
-v0.1.1 -
+v0.1.1 - poprawne zainicjowanie ścieżek do linków
+v0.1.2 - 

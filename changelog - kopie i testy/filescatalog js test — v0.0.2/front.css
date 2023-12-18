@@ -14,17 +14,17 @@ body {
 	padding: 0;
 }
 #filesCatalog {
+	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-flow: column wrap;
+	flex-flow: column nowrap;
 	gap: var(--gap);
 }
 
 #folders,
 #files {
 	display: flex;
-	flex-flow: row wrap;
 	gap: var(--gap);
 }
 
@@ -39,7 +39,6 @@ body {
 	align-items: center;
 	cursor: pointer;
 	gap: 10px;
-	background-color: lightgray;
 }
 
 .folder {

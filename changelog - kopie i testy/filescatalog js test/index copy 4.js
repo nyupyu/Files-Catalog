@@ -19,31 +19,29 @@ function filesCatalog() {
 		}
 	}
 
-	function savePathData(path) {
-		PATH_TO_FILE_DATA.push(path);
-		console.log('SAVE PATH TO DATA', PATH_TO_FILE_DATA);
-	}
-
-	function generatePathToFile(value) {
-		PATH_TO_FILE_DATA.push(value);
+	function generatePathToFile() {
 		let pathToFile = PATH_TO_FILE_DATA.toString();
-		console.log('GENERATE ', pathToFile);
-		if (value.includes('.')) {
-			PATH_TO_FILE_DATA.pop();
-		}
 		pathToFile = pathToFile.replaceAll(',', '/');
 		pathToFile = pathToFile.replaceAll(' ', '%');
 		pathToFile = SERVER_PATH_TO_DOWNLOAD_FOLDER + pathToFile;
-		return pathToFile;
+		console.log(pathToFile);
 	}
 
+	function savePathData(path) {
+		PATH_TO_FILE_DATA.push(path);
+		generatePathToFile();
+		if (path.includes('.')) {
+			PATH_TO_FILE_DATA.pop();
+			// console.log(PATH_TO_FILE_DATA);
+		}
+	}
 	function buildFolder(data) {
 		for (const [key, value] of Object.entries(data)) {
 			const newItem = document.createElement('a');
 			if (!isNaN(key)) {
-				newItem.setAttribute('href', generatePathToFile(value));
-				newItem.setAttribute('target', '_blank');
-				newItem.setAttribute('download', value);
+				newItem.addEventListener('click', () => {
+					savePathData(value);
+				});
 				if (value.includes('pdf')) newItem.classList.add('pdf');
 				newItem.classList.add('file');
 				newItem.innerHTML = `<p>${value}</p>`;
@@ -52,8 +50,8 @@ function filesCatalog() {
 				newItem.classList.add('folder');
 				newItem.innerHTML = `<p>${key}</p>`;
 				newItem.addEventListener('click', () => {
-					savePathData(key);
 					handleItemClick(value);
+					savePathData(key);
 				});
 				FOLDERS.appendChild(newItem);
 			}
@@ -61,11 +59,11 @@ function filesCatalog() {
 	}
 
 	function buildFiles(files) {
-		const newFile = document.createElement('a');
 		for (const file of files) {
-			newFile.setAttribute('href', generatePathToFile(file));
-			newFile.setAttribute('target', '_blank');
-			newFile.setAttribute('download', file);
+			const newFile = document.createElement('a');
+			newFile.addEventListener('click', () => {
+				savePathData(file);
+			});
 			if (file.includes('pdf')) newFile.classList.add('pdf');
 			newFile.classList.add('file');
 			newFile.innerHTML = `<p>${file}</p>`;
@@ -73,7 +71,7 @@ function filesCatalog() {
 		}
 	}
 
-	function handleItemClick(data) {
+	function handleItemClick(data, key) {
 		saveData(data);
 		FOLDERS.innerHTML = '';
 		FILES.innerHTML = '';
@@ -94,7 +92,6 @@ function filesCatalog() {
 		if (SAVED_DATA.length > 1) {
 			SAVED_DATA.pop();
 			PATH_TO_FILE_DATA.pop();
-			console.log('GO BACK ', PATH_TO_FILE_DATA);
 			handleItemClick(SAVED_DATA.pop());
 		}
 	}

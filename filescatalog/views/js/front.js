@@ -4,24 +4,46 @@ function filesCatalog() {
 	const FILES = document.getElementById('files');
 	const BACK_BUTTON = document.getElementById('backButton');
 
-	const savedData = [];
+	const SAVED_DATA = [];
+	const PATH_TO_FILE_DATA = [];
+	const SERVER_PATH_TO_DOWNLOAD_FOLDER = 'https://qmtwjcpfur.cfolks.pl/pliki-do-pobrania/katalog/';
 
 	async function loadFileStructure() {
 		try {
 			const response = await fetch(window.jsonFilePath);
-			const data = await response.json();
-
-			buildFolder(data);
-			saveData(data);
+			const DATA = await response.json();
+			buildFolder(DATA);
+			saveData(DATA);
 		} catch (error) {
 			console.error('Error loading JSON file:', error);
 		}
 	}
 
+	function savePathData(path) {
+		PATH_TO_FILE_DATA.push(path);
+		console.log('SAVE PATH TO DATA', PATH_TO_FILE_DATA);
+	}
+
+	function generatePathToFile(value) {
+		PATH_TO_FILE_DATA.push(value);
+		let pathToFile = PATH_TO_FILE_DATA.toString();
+		console.log('GENERATE ', pathToFile);
+		if (value.includes('.')) {
+			PATH_TO_FILE_DATA.pop();
+		}
+		pathToFile = pathToFile.replaceAll(',', '/');
+		pathToFile = pathToFile.replaceAll(' ', '%');
+		pathToFile = SERVER_PATH_TO_DOWNLOAD_FOLDER + pathToFile;
+		return pathToFile;
+	}
+
 	function buildFolder(data) {
 		for (const [key, value] of Object.entries(data)) {
-			const newItem = document.createElement('div');
+			const newItem = document.createElement('a');
 			if (!isNaN(key)) {
+				newItem.setAttribute('href', generatePathToFile(value));
+				newItem.setAttribute('target', '_blank');
+				newItem.setAttribute('download', value);
 				if (value.includes('pdf')) newItem.classList.add('pdf');
 				newItem.classList.add('file');
 				newItem.innerHTML = `<p>${value}</p>`;
@@ -29,16 +51,22 @@ function filesCatalog() {
 			} else {
 				newItem.classList.add('folder');
 				newItem.innerHTML = `<p>${key}</p>`;
-				newItem.addEventListener('dblclick', () => handleItemClick(value));
+				newItem.addEventListener('click', () => {
+					savePathData(key);
+					handleItemClick(value);
+				});
 				FOLDERS.appendChild(newItem);
 			}
 		}
 	}
 
 	function buildFiles(files) {
+		const newFile = document.createElement('a');
 		for (const file of files) {
-			const newFile = document.createElement('div');
-			if (value.includes('pdf')) newItem.classList.add('pdf');
+			newFile.setAttribute('href', generatePathToFile(file));
+			newFile.setAttribute('target', '_blank');
+			newFile.setAttribute('download', file);
+			if (file.includes('pdf')) newFile.classList.add('pdf');
 			newFile.classList.add('file');
 			newFile.innerHTML = `<p>${file}</p>`;
 			FILES.appendChild(newFile);
@@ -49,7 +77,6 @@ function filesCatalog() {
 		saveData(data);
 		FOLDERS.innerHTML = '';
 		FILES.innerHTML = '';
-
 		if (Array.isArray(data)) {
 			buildFiles(data);
 		} else if (typeof data === 'object') {
@@ -60,14 +87,15 @@ function filesCatalog() {
 	}
 
 	function saveData(data) {
-		savedData.push(data);
-		console.log(savedData);
+		SAVED_DATA.push(data);
 	}
 
 	function goBack() {
-		if (savedData.length > 1) {
-			savedData.pop();
-			handleItemClick(savedData.pop());
+		if (SAVED_DATA.length > 1) {
+			SAVED_DATA.pop();
+			PATH_TO_FILE_DATA.pop();
+			console.log('GO BACK ', PATH_TO_FILE_DATA);
+			handleItemClick(SAVED_DATA.pop());
 		}
 	}
 
