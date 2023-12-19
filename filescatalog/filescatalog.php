@@ -7,9 +7,10 @@ if (!defined('_PS_VERSION_')) {
 class Filescatalog extends Module
 {
     const MODULE_NAME = 'filescatalog';
-    const MODULE_VERSION = '0.1.1';
+    const MODULE_VERSION = '0.1.2';
     const MODULE_JSON_PATH = _PS_MODULE_DIR_ . '/' . self::MODULE_NAME . '/views/json/data.json';
     const MODULE_DATA_PATH_CONFIG = 'FILESCATALOG_PATH';
+    const MODULE_DATA_ID_CONFIG = 'FILESCATALOG_ID';
 
     public function __construct()
     {
@@ -22,16 +23,18 @@ class Filescatalog extends Module
         parent::__construct();
 
         $this->displayName = $this->trans('Files Catalog');
-        $this->description = $this->trans("A custom module to analyze folder structure and show client's download center.");
+        $this->description = $this->trans("A custom module to analyze folder structure and show client's download center by replacing template.");
 
         $this->config_path = Configuration::get(self::MODULE_DATA_PATH_CONFIG);
+        $this->config_id = Configuration::get(self::MODULE_DATA_ID_CONFIG);
         $this->registerHook('displayOverrideTemplate');
         $this->registerHook('actionDispatcher');
     }
 
     public function install()
     {
-        Configuration::updateValue(self::MODULE_DATA_PATH_CONFIG, _PS_ROOT_DIR_ . '/download-center/catalog');
+        Configuration::updateValue(self::MODULE_DATA_PATH_CONFIG, _PS_ROOT_DIR_ . '/pliki-do-pobrania/katalog');
+        Configuration::updateValue(self::MODULE_DATA_ID_CONFIG, '-1');
 
         return parent::install() && $this->registerHook('displayHeader') && $this->registerHook('actionAdminControllerSetMedia');
     }
@@ -61,19 +64,26 @@ class Filescatalog extends Module
         $fieldsForm = [
             'form' => [
                 'legend' => [
-                    'title' => $this->l('Settings'),
+                    'title' => $this->trans('Settings'),
                 ],
                 'input' => [
                     [
                         'type' => 'text',
-                        'label' => $this->l('Path to Analyze'),
+                        'label' => $this->trans('Path to Analyze'),
                         'name' => 'filescatalog_path',
+                        'size' => 50,
+                        'required' => true,
+                    ],
+                    [
+                        'type' => 'text',
+                        'label' => $this->trans('ID to replace'),
+                        'name' => 'filescatalog_id',
                         'size' => 50,
                         'required' => true,
                     ],
                 ],
                 'submit' => [
-                    'title' => $this->l('Save'),
+                    'title' => $this->trans('Save'),
                     'class' => 'btn btn-default pull-right',
                 ],
             ],
@@ -95,7 +105,9 @@ class Filescatalog extends Module
     private function postProcess()
     {
         $newPath = Tools::getValue('filescatalog_path');
+        $newID = Tools::getValue('filescatalog_id');
         Configuration::updateValue(self::MODULE_DATA_PATH_CONFIG, _PS_ROOT_DIR_ . '/' . $newPath);
+        Configuration::updateValue(self::MODULE_DATA_ID_CONFIG, $newID);
     }
 
     public function saveToJSON($jsonPath)
@@ -151,7 +163,7 @@ class Filescatalog extends Module
     $controller_name = Tools::getValue('controller');
     $id_cms = Tools::getValue('id_cms');
 
-    if ($controller_name === 'cms' && $id_cms == '9') {
+    if ($controller_name === 'cms' && $id_cms == $this->config_id) {
         return $this->getFrontController();
     }
 
