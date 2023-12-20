@@ -12,4 +12,5 @@ v0.0.9 - poprawne wygenerowanie struktury linków na stronie
 v0.1.0 - pierwsza wersja z obsługa plików, brak generowania linków do plików 
 v0.1.1 - poprawne zainicjowanie ścieżek do linków
 v0.1.2 - dodano możliwość wyboru ID strony CMS do podmiany, pomślne przejście testów, włącznie ze zmianą ścieżki w ustawieniach "Ruch"
-v0.1.3 - 
+v0.1.3 - dodano Polskie tłumaczenie dla modułu
+v0.1.4 - 
