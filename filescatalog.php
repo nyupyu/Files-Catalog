@@ -53,26 +53,17 @@ class Filescatalog extends Module
 public function getContent()
 {
     $output = null;
-
     if (Tools::isSubmit('submitFilescatalog')) {
-        // Wywołaj funkcję odpowiedzialną za przetwarzanie formularza
         $output .= $this->postProcess();
         $output .= $this->displayConfirmation($this->l('Settings updated'));
     }
-
-    // Sprawdź, czy został naciśnięty przycisk do wykonania niestandardowej akcji
     if (Tools::isSubmit('submitRefresh')) {
-        // Wywołaj funkcję niestandardową
         $this->saveToJSON(self::MODULE_JSON_PATH);
         $output .= $this->displayConfirmation($this->l('The catalog has been updated.'));
     }
-
-    // Wyświetl formularz
     $output .= $this->displayForm();
-
     return $output;
 }
-
 
     public function displayForm()
     {
@@ -117,7 +108,7 @@ public function getContent()
 
     $form = $helper->generateForm([$fieldsForm]);
 
-    // Dodaj przycisk do wywołania dodatkowej funkcji
+    
     $customButton = $this->getCustomButton();
     $form .= $customButton;
 
@@ -197,9 +188,6 @@ public function getContent()
         $this->getFrontController();
     }
     }
-
-
-    // CONTROLLER
 
     private function getFrontController()
     {
