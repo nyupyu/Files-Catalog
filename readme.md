@@ -1,0 +1,1 @@
+It's my first prestashop module, it using structure of catalogs and files generated in backend by PHP in JSON file to execute folders structure with files on client side by JS. Client can download files from catalog easly.
