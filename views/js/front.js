@@ -1,5 +1,4 @@
 function filesCatalog() {
-	const FILES_CATALOG = document.getElementById('filesCatalog');
 	const FOLDERS = document.getElementById('folders');
 	const FILES = document.getElementById('files');
 	const BACK_BUTTON = document.getElementById('backButton');
@@ -21,17 +20,16 @@ function filesCatalog() {
 
 	function savePathData(path) {
 		PATH_TO_FILE_DATA.push(path);
-		console.log('SAVE PATH TO DATA', PATH_TO_FILE_DATA);
 	}
 
 	function generatePathToFile(value) {
 		PATH_TO_FILE_DATA.push(value);
 		let pathToFile = PATH_TO_FILE_DATA.toString();
-		console.log('GENERATE ', pathToFile);
 		if (value.includes('.')) {
 			PATH_TO_FILE_DATA.pop();
 		}
 		pathToFile = pathToFile.replaceAll(',', '/');
+		// pathToFile = pathToFile.replaceAll(' ', '%');
 		pathToFile = SERVER_PATH_TO_DOWNLOAD_FOLDER + pathToFile;
 		return pathToFile;
 	}
@@ -40,13 +38,9 @@ function filesCatalog() {
 		for (const [key, value] of Object.entries(data)) {
 			const newItem = document.createElement('a');
 			if (!isNaN(key)) {
-				newItem.setAttribute('href', generatePathToFile(value));
-				newItem.setAttribute('target', '_blank');
-				newItem.setAttribute('download', value);
-				if (value.includes('pdf')) newItem.classList.add('pdf');
-				newItem.classList.add('file');
-				newItem.innerHTML = `<p>${value}</p>`;
-				FILES.appendChild(newItem);
+				const newArray = [];
+				newArray.push(value);
+				buildFiles(newArray);
 			} else {
 				newItem.classList.add('folder');
 				newItem.innerHTML = `<p>${key}</p>`;
@@ -60,8 +54,8 @@ function filesCatalog() {
 	}
 
 	function buildFiles(files) {
-		const newFile = document.createElement('a');
 		for (const file of files) {
+			const newFile = document.createElement('a');
 			newFile.setAttribute('href', generatePathToFile(file));
 			newFile.setAttribute('target', '_blank');
 			newFile.setAttribute('download', file);

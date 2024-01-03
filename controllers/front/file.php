@@ -6,10 +6,8 @@ class FilescatalogFileModuleFrontController extends ModuleFrontController
     {
         parent::initContent();
 
-             // Dodaj plik JavaScript
         $this->context->controller->addJS($this->module->getPathUri() . 'views/js/front.js', 'module');
 
-        // Przekaż ścieżkę do pliku JSON do JavaScript
         $jsonFilePath = $this->module->getPathUri() . 'views/json/data.json';
         Media::addJsDef(array('jsonFilePath' => $jsonFilePath));
 

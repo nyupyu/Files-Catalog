@@ -1,68 +1,70 @@
-:root {
-	--gap: 20px;
+.pdf::before {
+	background-image: url('../img/pdf.png');
 }
 
+.folder::before {
+	background-image: url('../img/folder.png');
+}
+
+:root {
+	--gap: 10px;
+}
+.row {
+	background: #fff;
+}
+#back {
+	padding: 10px;
+}
 #filesCatalog * {
 	transition: 200ms;
 }
-
 #filesCatalog p {
 	margin: 0;
 	padding: 0;
 }
 #filesCatalog {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-flow: column wrap;
+	justify-content: start;
+	align-items: start;
+	flex-flow: row nowrap;
 	gap: var(--gap);
 	padding: var(--gap);
+	min-height: 400px;
+}
+
+#folders {
+	flex-flow: column wrap;
+	width: 200px;
+	display: flex;
+}
+#files {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 #folders,
 #files {
-	display: flex;
-	flex-flow: row wrap;
 	gap: var(--gap);
 }
 
 .folder,
 .file {
-	border-radius: 8px;
-	padding: 10px 20px;
-	text-align: left;
 	display: flex;
-	justify-content: space-between;
+	justify-content: start;
 	align-items: center;
 	cursor: pointer;
-	gap: 5px;
-	background-color: lightgray;
-}
-.file {
-	width: 200px;
-}
-.folder {
-	background-color: rgb(207, 255, 239);
+	gap: var(--gap);
 }
 
+.folder::before,
 .pdf::before {
 	display: block;
 	content: '';
-	width: 30px;
-	height: 30px;
-	background-image: url('../img/pdf.png');
+	width: 1.5em;
+	height: 1.5em;
 	background-size: cover;
 	justify-self: center;
 	align-self: center;
-}
-
-.folder::before {
-	display: block;
-	content: '';
-	width: 30px;
-	height: 30px;
-	background-image: url('../img/folder.png');
-	background-size: cover;
-	justify-self: center;
-	align-self: center;
+	margin: 5px;
 }
