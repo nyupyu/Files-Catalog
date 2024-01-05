@@ -1,5 +1,7 @@
 :root {
-	--gap: 10px;
+	--gap: 1rem;
+	--font-size: 1rem;
+	--icon-size: 1.5rem;
 }
 .row {
 	background: #fff;
@@ -9,7 +11,8 @@
 }
 #filesCatalog * {
 	transition: 200ms;
-	color: #232323;
+	color: #f0f0f0;
+	font-size: var(--font-size);
 }
 #filesCatalog p {
 	margin: 0;
@@ -25,6 +28,7 @@
 	min-height: 400px;
 	border: 1px solid grey;
 	border-radius: 5px;
+	background: #393939;
 }
 
 #folders {
@@ -38,12 +42,12 @@
 #files {
 	width: 100%;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 #folders,
 #files {
-	gap: calc(var(--gap) + 10px) calc(var(--gap) + 5px);
+	gap: calc(var(--gap)) calc(var(--gap) + 10px);
 }
 
 .folder,
@@ -53,13 +57,15 @@
 	justify-content: start;
 	align-items: center;
 	width: fit-content;
-	gap: var(--gap);
+	gap: calc(var(--gap) - 10px);
 	cursor: pointer;
+	min-width: 150px;
 }
 
 .folder__img,
 .file__img {
-	width: 20px;
+	width: var(--icon-size);
+	object-fit: contain;
 }
 
 #back__button {
@@ -75,4 +81,8 @@
 
 #back__button:hover {
 	transform: rotateZ(-15deg) scale(1.1);
+}
+
+#back__button:focus {
+	outline: none;
 }

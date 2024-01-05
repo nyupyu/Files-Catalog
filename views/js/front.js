@@ -1,10 +1,25 @@
 function filesCatalog() {
 	const FOLDERS = document.getElementById('folders');
 	const FILES = document.getElementById('files');
-
 	const SAVED_DATA = [];
 	const PATH_TO_FILE_DATA = [];
 	const SERVER_PATH_TO_DOWNLOAD_FOLDER = 'https://qmtwjcpfur.cfolks.pl/pliki-do-pobrania/katalog/';
+	const SERVER_PATH = 'https://qmtwjcpfur.cfolks.pl/modules/filescatalog';
+
+	const IMAGE_PROPS = {
+		pdf: { name: 'pdf', path: SERVER_PATH + '/./views/img/pdf.svg' },
+		txt: { name: 'txt', path: SERVER_PATH + '/./views/img/txt.svg' },
+		png: { name: 'png', path: SERVER_PATH + '/./views/img/png.svg' },
+		doc: { name: 'doc', path: SERVER_PATH + '/./views/img/doc.svg' },
+		jpg: { name: 'jpg', path: SERVER_PATH + '/./views/img/jpg.svg' },
+		jpeg: { name: 'jpeg', path: SERVER_PATH + '/./views/img/jpg.svg' },
+		xml: { name: 'xml', path: SERVER_PATH + '/./views/img/xml.svg' },
+		xmls: { name: 'xmls', path: SERVER_PATH + '/./views/img/xml.svg' },
+		xls: { name: 'xls', path: SERVER_PATH + '/./views/img/xls.svg' },
+		csv: { name: 'csv', path: SERVER_PATH + '/./views/img/csv.svg' },
+		zip: { name: 'zip', path: SERVER_PATH + '/./views/img/zip.svg' },
+		file: { name: 'file', path: SERVER_PATH + '/./views/img/file.svg' },
+	};
 
 	async function loadFileStructure() {
 		try {
@@ -50,7 +65,7 @@ function filesCatalog() {
 				const image = document.createElement('img');
 				const title = document.createElement('p');
 				newItem.classList.add('folder');
-				image.setAttribute('src', 'https://qmtwjcpfur.cfolks.pl/modules/filescatalog/views/img/folder.png');
+				image.setAttribute('src', SERVER_PATH + '/./views/img/folder.svg');
 				image.setAttribute('alt', 'folder');
 				image.classList.add('folder__img');
 				title.classList.add('folder__text');
@@ -72,13 +87,15 @@ function filesCatalog() {
 			const title = document.createElement('p');
 			const link = document.createElement('a');
 			newFile.classList.add('file');
-			const imageProp = {
-				pdf: { name: 'pdf', path: 'https://qmtwjcpfur.cfolks.pl/modules/filescatalog/views/img/pdf.png' },
-				image: { name: 'pdf', path: './../img/image.png' },
-			};
-			if (file.includes(imageProp.pdf.name)) {
-				image.setAttribute('src', imageProp.pdf.path);
-				image.setAttribute('alt', imageProp.pdf.name);
+			for (const [key, value] of Object.entries(IMAGE_PROPS)) {
+				if (file.includes('.' + value.name)) {
+					image.setAttribute('src', value.path);
+					image.setAttribute('alt', value.name);
+					break;
+				} else if (!file.includes('.' + value.name)) {
+					image.setAttribute('src', IMAGE_PROPS.file.path);
+					image.setAttribute('alt', IMAGE_PROPS.file.name);
+				}
 			}
 			image.classList.add('file__img');
 			title.classList.add('file__text');
