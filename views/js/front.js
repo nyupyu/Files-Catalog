@@ -1,7 +1,6 @@
 function filesCatalog() {
 	const FOLDERS = document.getElementById('folders');
 	const FILES = document.getElementById('files');
-	const BACK_BUTTON = document.getElementById('backButton');
 
 	const SAVED_DATA = [];
 	const PATH_TO_FILE_DATA = [];
@@ -11,7 +10,7 @@ function filesCatalog() {
 		try {
 			const response = await fetch(window.jsonFilePath);
 			const DATA = await response.json();
-			buildFolder(DATA);
+			buildFolders(DATA);
 			saveData(DATA);
 		} catch (error) {
 			console.error('Error loading JSON file:', error);
@@ -29,21 +28,35 @@ function filesCatalog() {
 			PATH_TO_FILE_DATA.pop();
 		}
 		pathToFile = pathToFile.replaceAll(',', '/');
-		// pathToFile = pathToFile.replaceAll(' ', '%');
 		pathToFile = SERVER_PATH_TO_DOWNLOAD_FOLDER + pathToFile;
 		return pathToFile;
 	}
-
-	function buildFolder(data) {
+	function buildBackButton() {
+		const backButton = document.createElement('button');
+		const text = '\u293A';
+		backButton.setAttribute('id', 'back__button');
+		backButton.textContent = text;
+		backButton.addEventListener('click', () => goBack());
+		return backButton;
+	}
+	function buildFolders(data) {
 		for (const [key, value] of Object.entries(data)) {
-			const newItem = document.createElement('a');
 			if (!isNaN(key)) {
 				const newArray = [];
 				newArray.push(value);
 				buildFiles(newArray);
 			} else {
+				const newItem = document.createElement('div');
+				const image = document.createElement('img');
+				const title = document.createElement('p');
 				newItem.classList.add('folder');
-				newItem.innerHTML = `<p>${key}</p>`;
+				image.setAttribute('src', 'https://qmtwjcpfur.cfolks.pl/modules/filescatalog/views/img/folder.png');
+				image.setAttribute('alt', 'folder');
+				image.classList.add('folder__img');
+				title.classList.add('folder__text');
+				title.textContent = key;
+				newItem.appendChild(image);
+				newItem.appendChild(title);
 				newItem.addEventListener('click', () => {
 					savePathData(key);
 					handleItemClick(value);
@@ -52,16 +65,31 @@ function filesCatalog() {
 			}
 		}
 	}
-
-	function buildFiles(files) {
-		for (const file of files) {
-			const newFile = document.createElement('a');
-			newFile.setAttribute('href', generatePathToFile(file));
-			newFile.setAttribute('target', '_blank');
-			newFile.setAttribute('download', file);
-			if (file.includes('pdf')) newFile.classList.add('pdf');
+	function buildFiles(data) {
+		for (const file of data) {
+			const newFile = document.createElement('div');
+			const image = document.createElement('img');
+			const title = document.createElement('p');
+			const link = document.createElement('a');
 			newFile.classList.add('file');
-			newFile.innerHTML = `<p>${file}</p>`;
+			const imageProp = {
+				pdf: { name: 'pdf', path: 'https://qmtwjcpfur.cfolks.pl/modules/filescatalog/views/img/pdf.png' },
+				image: { name: 'pdf', path: './../img/image.png' },
+			};
+			if (file.includes(imageProp.pdf.name)) {
+				image.setAttribute('src', imageProp.pdf.path);
+				image.setAttribute('alt', imageProp.pdf.name);
+			}
+			image.classList.add('file__img');
+			title.classList.add('file__text');
+			title.textContent = file;
+			link.classList.add('file__link');
+			link.setAttribute('href', generatePathToFile(file));
+			link.setAttribute('target', '_blank');
+			link.setAttribute('download', file);
+			link.appendChild(image);
+			link.appendChild(title);
+			newFile.appendChild(link);
 			FILES.appendChild(newFile);
 		}
 	}
@@ -69,13 +97,12 @@ function filesCatalog() {
 	function handleItemClick(data) {
 		saveData(data);
 		FOLDERS.innerHTML = '';
+		FOLDERS.appendChild(buildBackButton());
 		FILES.innerHTML = '';
 		if (Array.isArray(data)) {
 			buildFiles(data);
 		} else if (typeof data === 'object') {
-			buildFolder(data);
-		} else {
-			buildFiles([data]);
+			buildFolders(data);
 		}
 	}
 
@@ -91,8 +118,7 @@ function filesCatalog() {
 			handleItemClick(SAVED_DATA.pop());
 		}
 	}
-
-	BACK_BUTTON.addEventListener('click', goBack);
+	FOLDERS.appendChild(buildBackButton());
 	loadFileStructure();
 }
 

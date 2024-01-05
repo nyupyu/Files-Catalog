@@ -7,7 +7,7 @@ if (!defined('_PS_VERSION_')) {
 class Filescatalog extends Module
 {
     const MODULE_NAME = 'filescatalog';
-    const MODULE_VERSION = '0.1.4';
+    const MODULE_VERSION = '0.1.6';
     const MODULE_JSON_PATH = _PS_MODULE_DIR_ . '/' . self::MODULE_NAME . '/views/json/data.json';
     const MODULE_DATA_PATH_CONFIG = 'FILESCATALOG_PATH';
     const MODULE_DATA_ID_CONFIG = 'FILESCATALOG_ID';
